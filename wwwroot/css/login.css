@@ -1,0 +1,168 @@
+﻿html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+}
+
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==========================
+   PANEL IZQUIERDO
+========================== */
+
+.login-left {
+    flex: 1;
+    background: #0d2b45;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+}
+
+.brand-content {
+    max-width: 430px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.brand-content h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.brand-content p {
+    font-size: 1.05rem;
+    opacity: .85;
+    margin-bottom: 0;
+}
+
+.features {
+    margin-top: 50px;
+}
+
+    .features div {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 14px;
+    }
+
+/* ==========================
+   PANEL DERECHO
+========================== */
+
+.login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-left: 1px solid rgba(0,0,0,.05);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+    .login-card h4 {
+        color: #0d2b45;
+        margin-bottom: 1.75rem !important;
+    }
+
+/* ==========================
+   FORMULARIO
+========================== */
+
+.form-label {
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-control {
+    height: 48px;
+    border-color: #dee2e6;
+}
+
+    .form-control:focus {
+        border-color: #f59e0b;
+        box-shadow: 0 0 0 .15rem rgba(245,158,11,.20);
+    }
+
+.input-group-text {
+    background: white;
+    border-color: #dee2e6;
+}
+
+/* ==========================
+   BOTON
+   (NO TOCADO)
+========================== */
+
+.btn-primary {
+    background: #f59e0b;
+    border: none;
+    height: 48px;
+    font-weight: 600;
+}
+
+    .btn-primary:hover {
+        background: #d97706;
+    }
+
+/* ==========================
+   ALERTAS
+========================== */
+
+.alert {
+    border-radius: 10px;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+.footer {
+    color: #6b7280;
+    font-size: .85rem;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 992px) {
+
+    .login-left {
+        display: none !important;
+    }
+
+    .login-right {
+        width: 100%;
+        padding: 20px;
+        border-left: none;
+    }
+
+    .login-card {
+        max-width: 450px;
+        padding: 30px;
+    }
+}
