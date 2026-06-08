@@ -344,3 +344,85 @@ button {
         padding: 6px 10px;
     }
 }
+
+.dashboard-container {
+    padding: 10px 0;
+}
+
+.dashboard-title {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+    color: var(--color-muted);
+    margin-bottom: 20px;
+}
+
+.dashboard-link {
+    text-decoration: none;
+}
+
+.dashboard-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.dashboard-main-card {
+    text-align: center;
+    padding: 20px;
+    transition: .2s ease;
+}
+
+    .dashboard-main-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+
+.dashboard-small-card {
+    transition: .2s ease;
+}
+
+    .dashboard-small-card:hover {
+        transform: translateY(-2px);
+    }
+
+.awesome-hero {
+    padding: 10px 0;
+}
+
+.awesome-card {
+    transition: all 0.25s ease;
+    border-radius: 16px;
+    background: #fff;
+}
+
+    .awesome-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+    }
+
+.awesome-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-box {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.awesome-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+    .awesome-link:hover {
+        color: inherit;
+    }

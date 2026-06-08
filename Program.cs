@@ -53,6 +53,7 @@ builder.Services.AddDbContext<SclDbContext>(options =>
 // ==========================
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IngresosService>();
 
 // ==========================
 // AUTHENTICATION

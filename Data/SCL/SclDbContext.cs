@@ -12,4 +12,7 @@ public class SclDbContext : DbContext
     }
 
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<BitacoraIngreso> BitacoraIngresos { get; set; } = null!;
+    public DbSet<BitacoraDespacho> BitacoraDespachos { get; set; }
+
 }
