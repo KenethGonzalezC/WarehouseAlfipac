@@ -4,6 +4,7 @@ using AWESOME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AWESOME.Migrations
 {
     [DbContext(typeof(AwesomeDbContext))]
-    partial class AwesomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260611181138_ExpedienteOperativo")]
+    partial class ExpedienteOperativo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +37,8 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Anotaciones")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Anticipado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ArchivoExcel")
                         .IsRequired()
@@ -45,25 +48,25 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Bodega")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Bultos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("CargaPaletizada")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CargaSuelta")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Contenedor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dua")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Embalaje")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EntarimadoyEmplasticado")
+                    b.Property<bool>("Entarimado")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Etiquetado")
@@ -71,9 +74,6 @@ namespace AWESOME.Migrations
 
                     b.Property<bool>("ExtraccionMuestras")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Factura")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("FechaAduana")
                         .HasColumnType("datetime2");
@@ -104,12 +104,6 @@ namespace AWESOME.Migrations
 
                     b.Property<DateTime?>("FechaSalidaVacio")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaVerificacionCarga")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Flejeado")
-                        .HasColumnType("bit");
 
                     b.Property<string>("HoraAduana")
                         .HasColumnType("nvarchar(max)");
@@ -143,13 +137,10 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Inventario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("M1")
+                    b.Property<bool>("InformacionCorreo")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("M6")
+                    b.Property<bool>("ManejoEspecial")
                         .HasColumnType("bit");
 
                     b.Property<string>("Marchamo")
@@ -163,20 +154,8 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("MovilizacionaAnden")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("NoTransmision")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NumeroViaje")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ObservacionesVerificacion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Peonaje")
@@ -186,22 +165,16 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PrevioExamen")
+                    b.Property<bool>("Reexportacion")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RutaFirmaVerificacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SeparaciondeMercaderias")
+                    b.Property<bool>("RollosPlasticos")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("ServicioAdicionalMontacargas")
+                    b.Property<bool>("SeparacionMercaderia")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("ServicioEspecialMontacargas12tons")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ServicioEspecialMontacargas5tons")
+                    b.Property<bool>("ServicioMontacargas")
                         .HasColumnType("bit");
 
                     b.Property<string>("Tamano")
@@ -209,9 +182,6 @@ namespace AWESOME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Tarimas")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Transmision")
                         .HasColumnType("bit");
 
                     b.Property<string>("Transportista")
@@ -222,36 +192,12 @@ namespace AWESOME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("UsoCamaraRefrigerada")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UsuarioRegistro")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("VerificacionBalanceo")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionCompleta")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionDanada")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionFaltante")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionOtros1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionOtros2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionRevision")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionSobrante")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("VerificacionTrasiego")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

@@ -1,0 +1,1201 @@
+﻿@model AWESOME.Models.Entidades.AperturaContenedor
+
+@{
+    ViewData["Title"] = $"Apertura - {Model.Contenedor}";
+    Layout = "_Layout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mb-3">
+        @TempData["Success"]
+    </div>
+}
+
+<form asp-action="GuardarDetalle"
+      asp-controller="AperturasOperativas"
+      method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="document-container">
+
+        <button type="submit"
+                class="print-btn save-btn">
+            💾 Guardar
+        </button>
+
+        <button type="button"
+                onclick="window.print()"
+                class="print-btn">
+            🖨️ Imprimir / Guardar PDF
+        </button>
+
+        <div class="warning-text">
+            Favor informar si el contenedor se devuelve vacío gracias
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="contact-left">
+                <div>Depto: Servicio al Cliente</div>
+                <div>Tel: (506)2634-9000</div>
+                <div>Es un gusto servirle!</div>
+            </div>
+
+            <div class="contact-right-container">
+
+                <div class="contact-right">
+                    <span class="dept">Ingresos</span>
+                    <a href="mailto:jfonseca@alfipac.com">
+                        jfonseca@alfipac.com
+                    </a>
+                </div>
+
+                <div class="contact-right">
+                    <span class="dept">Inventarios</span>
+                    <a href="mailto:fbustos@alfipac.com">
+                        fbustos@alfipac.com
+                    </a>
+                </div>
+
+                <div class="contact-right">
+                    <span class="dept">Facturación</span>
+                    <a href="mailto:gmontero@alfipac.com">
+                        gmontero@alfipac.com
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="time-table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th style="border:none;background:none;width:90px;"></th>
+
+                        <th>Ingreso</th>
+                        <th>Aduana</th>
+                        <th>Inicio Desc</th>
+                        <th>Final Desc</th>
+                        <th>Inventario</th>
+                        <th>Rep Vacio</th>
+                        <th>Salida Vacio</th>
+                        <th>Despacho</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td class="td-label">Fecha</td>
+
+                        <td>
+                            <input type="date"
+                                   value="@Model.FechaApertura.ToString("yyyy-MM-dd")"
+                                   readonly />
+                        </td>
+                        <td><input asp-for="FechaAduana" type="date" /></td>
+                        <td><input asp-for="FechaInicioDescarga" type="date" /></td>
+                        <td><input asp-for="FechaFinalDescarga" type="date" /></td>
+                        <td><input asp-for="FechaInventario" type="date" /></td>
+                        <td><input asp-for="FechaRepVacio" type="date" /></td>
+                        <td><input asp-for="FechaSalidaVacio" type="date" /></td>
+                        <td><input asp-for="FechaDespacho" type="date" /></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="td-label">Hora</td>
+
+                        <td>
+                            <input type="time"
+                                   value="@Model.HoraApertura"
+                                   readonly />
+                        </td>
+                        <td><input asp-for="HoraAduana" type="time" /></td>
+                        <td><input asp-for="HoraInicioDescarga" type="time" /></td>
+                        <td><input asp-for="HoraFinalDescarga" type="time" /></td>
+                        <td><input asp-for="HoraInventario" type="time" /></td>
+                        <td><input asp-for="HoraRepVacio" type="time" /></td>
+                        <td><input asp-for="HoraSalidaVacio" type="time" /></td>
+                        <td><input asp-for="HoraDespacho" type="time" /></td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="form-body">
+
+            <div>
+
+                <div class="form-row">
+                    <div class="label">Unidad de Transporte</div>
+                    <div class="input-line">
+                        <input asp-for="Contenedor" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Tamaño</div>
+                    <div class="input-line">
+                        <input asp-for="Tamano" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">N Viaje</div>
+                    <div class="input-line">
+                        <input asp-for="NumeroViaje" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Transportista</div>
+                    <div class="input-line">
+                        <input asp-for="Transportista" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Marchamo</div>
+                    <div class="input-line">
+                        <input asp-for="Marchamo" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Importador</div>
+                    <div class="input-line">
+                        <input asp-for="Importador" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Agencia</div>
+                    <div class="input-line">
+                        <input asp-for="Agencia" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Mercadería</div>
+                    <div class="input-line">
+                        <input asp-for="Mercaderia" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Bultos</div>
+                    <div class="input-line">
+                        <input asp-for="Bultos" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Peso</div>
+                    <div class="input-line">
+                        <input asp-for="Peso" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Embalaje</div>
+                    <div class="input-line">
+                        <input asp-for="Embalaje" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">BL</div>
+                    <div class="input-line">
+                        <input asp-for="BL" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Inventario</div>
+                    <div class="input-line">
+                        <input asp-for="Inventario" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Bodega</div>
+                    <div class="input-line">
+                        <input value="@Model.UbicacionActual"
+                               readonly />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Dua</div>
+                    <div class="input-line">
+                        <input asp-for="Dua" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Factura</div>
+                    <div class="input-line">
+                        <input asp-for="Factura" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="label">Observaciones</div>
+                    <div class="input-line">
+                        <textarea asp-for="Observaciones"></textarea>
+                    </div>
+                </div>
+
+                <div class="verificacion-box">
+
+                    <div class="section-title">
+                        Firma Autorizada
+                    </div>
+
+                    <input type="hidden"
+                           id="FirmaBase64"
+                           name="FirmaBase64" />
+
+                    <input type="hidden"
+                           asp-for="RutaFirmaVerificacion" />
+
+                    @if (!string.IsNullOrWhiteSpace(Model.RutaFirmaVerificacion))
+                    {
+                        <img id="firmaPreview"
+                             src="@Url.Content("~" + Model.RutaFirmaVerificacion)"
+                             class="firma-preview"
+                             style="display:block;" />
+                    }
+                    else
+                    {
+                        <img id="firmaPreview"
+                             class="firma-preview" />
+                    }
+
+                    <div class="firma-actions">
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalFirma">
+
+                            Firmar
+
+                        </button>
+
+                        <button type="button"
+                                id="btnLimpiarFirma"
+                                class="btn btn-danger">
+
+                            Eliminar Firma
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="section-title">
+                    Servicios Adicionales
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="M1" />
+                    <label asp-for="M1"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="M6" />
+                    <label asp-for="M6"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="SeparaciondeMercaderias" />
+                    <label asp-for="SeparaciondeMercaderias"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="PrevioExamen" />
+                    <label asp-for="PrevioExamen"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="ServicioAdicionalMontacargas" />
+                    <label asp-for="ServicioAdicionalMontacargas"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="ServicioEspecialMontacargas5tons" />
+                    <label asp-for="ServicioEspecialMontacargas5tons"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="ServicioEspecialMontacargas12tons" />
+                    <label asp-for="ServicioEspecialMontacargas12tons"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="Peonaje" />
+                    <label asp-for="Peonaje"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="Etiquetado" />
+                    <label asp-for="Etiquetado"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="Flejeado" />
+                    <label asp-for="Flejeado"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="EntarimadoyEmplasticado" />
+                    <label asp-for="EntarimadoyEmplasticado"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="MarchamosAdicionales" />
+                    <label asp-for="MarchamosAdicionales"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="ExtraccionMuestras" />
+                    <label asp-for="ExtraccionMuestras"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="Tarimas" />
+                    <label asp-for="Tarimas"></label>
+                </div>
+
+                <div class="checkbox-row">
+                    <input asp-for="MovilizacionaAnden" />
+                    <label asp-for="MovilizacionaAnden"></label>
+                </div>
+
+                <div class="verificacion-box">
+
+                    <div class="section-title">
+                        Verificación de Carga
+                    </div>
+
+                    <div class="form-row">
+                        <div class="label">
+                            Fecha
+                        </div>
+
+                        <div class="input-line">
+                            <input asp-for="FechaVerificacionCarga"
+                                   type="date" />
+                        </div>
+                    </div>
+
+                    <div >
+
+                        <div class="checkbox-row">
+                            <div>
+                                <label asp-for="VerificacionCompleta">
+                                    Completa  
+                                </label>
+                                <input asp-for="VerificacionCompleta" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionDanada">
+                                    Dañada  
+                                </label>
+                                <input asp-for="VerificacionDanada" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionBalanceo">
+                                    Balanceo  
+                                </label>
+                                <input asp-for="VerificacionBalanceo" />                                
+                            </div>
+                        </div>
+
+                        <div class="checkbox-row">
+                            <div>
+                                <label asp-for="VerificacionFaltante">
+                                    Faltante
+                                </label>
+                                <input asp-for="VerificacionFaltante" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionTrasiego">
+                                    Trasiego
+                                </label>
+                                <input asp-for="VerificacionTrasiego" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionOtros1">
+                                    Otros
+                                </label>
+                                <input asp-for="VerificacionOtros1" />                                
+                            </div>
+                        </div>                        
+                        
+                        <div class="checkbox-row">
+                            <div>
+                                <label asp-for="VerificacionSobrante">
+                                    Sobrante
+                                </label>
+                                <input asp-for="VerificacionSobrante" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionRevision">
+                                    Revisión
+                                </label>
+                                <input asp-for="VerificacionRevision" />                                
+                            </div>
+                            <div>
+                                <label asp-for="VerificacionOtros2">
+                                    Otros
+                                </label>
+                                <input asp-for="VerificacionOtros2" />                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verificacion-observaciones">
+
+                        <label class="form-label">
+                            Observaciones
+                        </label>
+
+                        <textarea asp-for="ObservacionesVerificacion"
+                                  class="form-control"
+                                  rows="1"></textarea>
+
+                        <div class="verificacion-box">
+
+                            <div class="checkbox-row">
+
+                                <label asp-for="Transmision">
+                                    Transmisión
+                                </label>
+                                <input asp-for="Transmision" />                                
+
+                                <label asp-for="NoTransmision">
+                                    No Transmisión
+                                </label>
+                                <input asp-for="NoTransmision" />                               
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>            
+
+        </div>
+
+        <div class="footer-section">
+
+            <div class="footer-row">
+
+                <div class="label"
+                     style="min-width:180px;">
+
+                    Anotaciones
+
+                </div>
+
+                <textarea asp-for="Anotaciones"
+                          class="legal-text">
+            </textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+
+<!--MODAL FIRMA-->
+<div class="modal fade"
+     id="modalFirma"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-fullscreen">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Firma Autorizada
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <canvas id="signature-pad"></canvas>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        id="btnClearCanvas"
+                        class="btn btn-secondary">
+
+                    Limpiar
+
+                </button>
+
+                <button type="button"
+                        id="btnGuardarFirma"
+                        class="btn btn-primary">
+
+                    Guardar Firma
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+        /* =========================================
+           CONFIGURACIÓN GENERAL
+           ========================================= */
+        body {
+            font-family: "Calibri", "Arial", sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #000;
+        }
+
+        .document-container {
+            background-color: #fff;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border: 1px solid #333;
+        }
+
+        /* =========================================
+           1. ENCABEZADO Y CONTACTOS
+           ========================================= */
+        .warning-text {
+            text-align: center;
+            color: #C00000;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border: 2px solid #C00000;
+            padding: 10px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 30px;
+            font-size: 15px;
+            gap: 20px;
+        }
+
+        .contact-left div {
+            font-weight: bold;
+            font-style: italic;
+            color: #1F4E78;
+            margin-bottom: 5px;
+        }
+
+        .contact-right {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 8px;
+        }
+
+        .contact-right .dept {
+            font-weight: bold;
+        }
+
+        .contact-right a {
+            color: #0563C1;
+            text-decoration: underline;
+        }
+
+        /* =========================================
+           2. TABLA DE TIEMPOS
+           ========================================= */
+        .time-table-container {
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #D9D9D9;
+            font-weight: bold;
+            font-size: 12.5px;
+            padding: 6px 4px;
+        }
+
+        .td-label {
+            border: none;
+            text-align: right;
+            font-weight: bold;
+            padding-right: 8px;
+            width: 75px;
+            background: none;
+            font-size: 13px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 4px 6px;
+            border: 1px solid #666;
+            box-sizing: border-box;
+            font-size: 13px;
+        }
+
+        input[type="date"], input[type="time"] {
+            width: 100%;
+            padding: 3px 4px;
+            border: 1px solid #666;
+            box-sizing: border-box;
+            font-size: 12.5px;
+            min-width: 0;
+        }
+
+        /* =========================================
+           3. CUERPO DEL FORMULARIO (2 COLUMNAS)
+           ========================================= */
+        .form-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 14px;
+            min-width: 140px;
+            white-space: nowrap;
+        }
+
+        .input-line {
+            flex-grow: 1;
+        }
+
+        .section-title {
+            background-color: #D9D9D9;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #000;
+            padding: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        /* Checkboxes */
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        /* =========================================
+           4. FOOTER / ANOTACIONES
+           ========================================= */
+        .footer-section {
+            margin-top: 20px;
+        }
+
+        .footer-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .legal-text {
+            font-size: 12px;
+            font-style: italic;
+            color: #595959;
+            flex-grow: 1;
+            line-height: 1.4;
+            border: 1px solid #666;
+            padding: 10px;
+            min-height: 80px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .save-btn {
+            right: 220px;
+        }
+
+        @@media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .document-container {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+                padding: 20px;
+                margin: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            input[type="date"], input[type="time"] {
+                font-size: 11px;
+                padding: 2px 4px;
+            }
+            th, td {
+                padding: 3px 4px;
+                font-size: 12px;
+            }
+            }
+
+            /* =========================================
+           VERIFICACIÓN DE CARGA
+           ========================================= */
+
+        .verificacion-box {
+            border: 2px solid #000;
+            padding: 15px;
+            margin-top: 25px;
+        }
+
+        .verificacion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .verificacion-observaciones {
+            margin-top: 15px;
+        }
+
+        #signature-pad {
+    width: 100%;
+    height: 70vh;
+    border: 2px solid #333;
+    background: white;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.firma-preview {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.firma-actions {
+    display: flex;
+    gap: 10px;
+}
+        
+    
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () =>
+{
+    const modalFirma =
+        document.getElementById("modalFirma");
+
+    const canvas =
+        document.getElementById("signature-pad");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    const inputFirma =
+        document.getElementById("FirmaBase64");
+
+    const preview =
+        document.getElementById("firmaPreview");
+
+    const btnGuardar =
+        document.getElementById("btnGuardarFirma");
+
+    const btnLimpiar =
+        document.getElementById("btnClearCanvas");
+
+    const btnEliminarFirma =
+        document.getElementById("btnLimpiarFirma");
+
+    let dibujando = false;
+
+    // ==========================================
+    // REDIMENSIONAR CANVAS
+    // ==========================================
+
+    function resizeCanvas()
+    {
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const ratio =
+            window.devicePixelRatio || 1;
+
+        canvas.width =
+            rect.width * ratio;
+
+        canvas.height =
+            rect.height * ratio;
+
+        ctx.scale(ratio, ratio);
+
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000";
+    }
+
+    // ==========================================
+    // MODAL ABIERTO
+    // ==========================================
+
+    modalFirma.addEventListener(
+        "shown.bs.modal",
+        () =>
+        {
+            canvas.style.width = "100%";
+            canvas.style.height = "70vh";
+
+            resizeCanvas();
+        });
+
+    // ==========================================
+    // OBTENER POSICIÓN
+    // ==========================================
+
+    function getPosition(e)
+    {
+        const rect =
+            canvas.getBoundingClientRect();
+
+        if (e.touches)
+        {
+            return {
+                x:
+                    e.touches[0].clientX
+                    - rect.left,
+
+                y:
+                    e.touches[0].clientY
+                    - rect.top
+            };
+        }
+
+        return {
+            x:
+                e.clientX
+                - rect.left,
+
+            y:
+                e.clientY
+                - rect.top
+        };
+    }
+
+    // ==========================================
+    // INICIAR DIBUJO
+    // ==========================================
+
+    function startDrawing(e)
+    {
+        dibujando = true;
+
+        const pos =
+            getPosition(e);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            pos.x,
+            pos.y);
+    }
+
+    // ==========================================
+    // DIBUJAR
+    // ==========================================
+
+    function draw(e)
+    {
+        if (!dibujando)
+        {
+            return;
+        }
+
+        e.preventDefault();
+
+        const pos =
+            getPosition(e);
+
+        ctx.lineTo(
+            pos.x,
+            pos.y);
+
+        ctx.stroke();
+    }
+
+    // ==========================================
+    // FINALIZAR
+    // ==========================================
+
+    function stopDrawing()
+    {
+        dibujando = false;
+    }
+
+    // ==========================================
+    // MOUSE
+    // ==========================================
+
+    canvas.addEventListener(
+        "mousedown",
+        startDrawing);
+
+    canvas.addEventListener(
+        "mousemove",
+        draw);
+
+    canvas.addEventListener(
+        "mouseup",
+        stopDrawing);
+
+    canvas.addEventListener(
+        "mouseleave",
+        stopDrawing);
+
+    // ==========================================
+    // TOUCH
+    // ==========================================
+
+    canvas.addEventListener(
+        "touchstart",
+        startDrawing,
+        { passive: false });
+
+    canvas.addEventListener(
+        "touchmove",
+        draw,
+        { passive: false });
+
+    canvas.addEventListener(
+        "touchend",
+        stopDrawing);
+
+    // ==========================================
+    // LIMPIAR CANVAS
+    // ==========================================
+
+    btnLimpiar.addEventListener(
+        "click",
+        () =>
+        {
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height);
+        });
+
+    // ==========================================
+    // COMPRESIÓN JPG
+    // ==========================================
+
+    function obtenerFirmaComprimida()
+    {
+        const canvasTemp =
+            document.createElement("canvas");
+
+        canvasTemp.width = 560;
+        canvasTemp.height = 260;
+
+        const tempCtx =
+            canvasTemp.getContext("2d");
+
+        tempCtx.fillStyle = "#FFFFFF";
+
+        tempCtx.fillRect(
+            0,
+            0,
+            canvasTemp.width,
+            canvasTemp.height);
+
+        tempCtx.drawImage(
+            canvas,
+            0,
+            0,
+            canvasTemp.width,
+            canvasTemp.height);
+
+        return canvasTemp.toDataURL(
+            "image/jpeg",
+            0.75);
+    }
+
+    // ==========================================
+    // GUARDAR FIRMA
+    // ==========================================
+
+    btnGuardar.addEventListener(
+        "click",
+        () =>
+        {
+            const firma =
+                obtenerFirmaComprimida();
+
+            inputFirma.value =
+                firma;
+
+            preview.src =
+                firma;
+
+            preview.style.display =
+                "block";
+
+            bootstrap.Modal
+                .getInstance(modalFirma)
+                .hide();
+        });
+
+    // ==========================================
+    // ELIMINAR FIRMA
+    // ==========================================
+
+    btnEliminarFirma.addEventListener(
+        "click",
+        () =>
+        {
+            inputFirma.value = "";
+
+            document.getElementById(
+                "RutaFirmaVerificacion")
+                .value = "";
+
+            preview.src = "";
+
+            preview.style.display =
+                "none";
+        });
+});
+
+
+</script>
+
+<script>
+
+document
+    .getElementById("btnLimpiarFirma")
+    ?.addEventListener("click", () =>
+{
+    document.getElementById("FirmaBase64").value = "";
+
+    document.getElementById(
+        "RutaFirmaVerificacion")
+        .value = "";
+
+    const preview =
+        document.getElementById(
+            "firmaPreview");
+
+    preview.src = "";
+    preview.style.display = "none";
+});
+
+</script>
+
+<script>
+document.querySelector("form")
+    .addEventListener("submit", () =>
+{
+    console.log(
+        "FirmaBase64 enviada:",
+        document.getElementById("FirmaBase64").value.length);
+});
+</script>

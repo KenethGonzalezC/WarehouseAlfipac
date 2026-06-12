@@ -1,0 +1,1139 @@
+﻿@model AWESOME.Models.ViewModels.InventarioGeneralVM
+
+@{
+    ViewData["Title"] = "Inventario General - SCL";
+}
+
+<div class="container-fluid awesome-inventario">
+
+    <!-- KPI -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Total en inventario
+                            </div>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.Total
+                            </h2>
+
+                        </div>
+
+                        <div class="icon-box bg-primary-subtle text-primary">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Cargados
+                            </div>
+
+                            <h2 class="fw-bold mb-0 text-success">
+                                @Model.Cargados
+                            </h2>
+
+                        </div>
+
+                        <div class="icon-box bg-success-subtle text-success">
+
+                            <i class="bi bi-check-circle"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Vacíos
+                                <small>
+                                    (No se listan)
+                                </small>
+                            </div>
+
+                            <h2 class="fw-bold mb-0 text-warning">
+                                @Model.Vacios
+                            </h2>
+
+                        </div>
+
+                        <div class="icon-box bg-warning-subtle text-warning">
+
+                            <i class="bi bi-inbox"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RESUMEN PATIOS -->
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h6 class="mb-0">
+                Distribución por ubicación
+            </h6>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-lg col-md-4 col-6">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <div class="text-muted small">
+                            Sin Patio
+                        </div>
+
+                        <h4 class="mb-0">
+                            @Model.SinAsignar
+                        </h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg col-md-4 col-6">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <div class="text-muted small">
+                            Patio 1
+                        </div>
+
+                        <h4 class="mb-0">
+                            @Model.Patio1
+                        </h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg col-md-4 col-6">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <div class="text-muted small">
+                            Patio 2
+                        </div>
+
+                        <h4 class="mb-0">
+                            @Model.Patio2
+                        </h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg col-md-4 col-6">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <div class="text-muted small">
+                            Andén 2000
+                        </div>
+
+                        <h4 class="mb-0">
+                            @Model.Anden2000
+                        </h4>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg col-md-4 col-6">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <div class="text-muted small">
+                            Químicos
+                        </div>
+
+                        <h4 class="mb-0">
+                            @Model.Quimicos
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FILTROS -->
+    <form method="get">
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+
+                <h6 class="mb-0">
+                    Filtros de búsqueda
+                </h6>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-2">
+
+                        <label class="form-label small text-muted">
+                            Contenedor
+                        </label>
+
+                        <input type="text"
+                               name="contenedor"
+                               value="@Model.Contenedor"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <label class="form-label small text-muted">
+                            Transportista
+                        </label>
+
+                        <input type="text"
+                               name="transportista"
+                               value="@Model.Transportista"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <label class="form-label small text-muted">
+                            Cliente
+                        </label>
+
+                        <input type="text"
+                               name="cliente"
+                               value="@Model.Cliente"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <label class="form-label small text-muted">
+                            Tamaño
+                        </label>
+
+                        <input type="text"
+                               name="tamano"
+                               value="@Model.Tamano"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <label class="form-label small text-muted">
+                            Patio
+                        </label>
+
+                        <select name="patio"
+                                class="form-select">
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="S/Pat">Sin Patio</option>
+                            <option value="P1">Patio 1</option>
+                            <option value="P2">Patio 2</option>
+                            <option value="2000">Andén 2000</option>
+                            <option value="AgroQui">Químicos</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Limpiar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <!-- TABLA -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h6 class="fw-semibold mb-0">
+                    Inventario General
+                </h6>
+
+                <small class="text-muted">
+                    Vista operativa en tiempo real desde SCL
+                </small>
+
+            </div>
+
+            <span class="badge bg-dark">
+                @Model.Items.Count registros
+            </span>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="">
+
+                <table class="table table-hover align-middle mb-0 table-sm shadow-sm">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Contenedor</th>
+                            <th>Marchamos</th>
+                            <th>Tamaño</th>
+                            <th>Chasis</th>
+                            <th>Transportista</th>
+                            <th>Cliente</th>
+                            <th class="text-center">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </th>
+                            <th>Ubicación</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model.Items.Any())
+                        {
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+
+                                    <td class="fw-bold">
+                                        @item.Contenedor
+                                    </td>
+
+                                    <td>
+                                        @item.Marchamos
+                                    </td>
+
+                                    <td>
+                                        @item.Tamano
+                                    </td>
+
+                                    <td>
+                                        @item.Chasis
+                                    </td>
+
+                                    <td>
+                                        @item.Transportista
+                                    </td>
+
+                                    <td>
+                                        @item.Cliente
+                                    </td>
+
+                                    <td>
+                                        @if (item.TieneApertura)
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-sm btn-primary"
+                                                    onclick="verApertura('@item.Contenedor')">
+
+                                                <i class="bi bi-eye"></i>
+
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button"
+                                                    class="btn btn-outline-success btn-sm btn-apertura"
+                                                    data-contenedor="@item.Contenedor">
+
+                                                <i class="bi bi-file-earmark-arrow-up"></i>
+
+                                            </button>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @item.Patio
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="8"
+                                    class="text-center text-muted py-5">
+
+                                    No existen registros para los filtros seleccionados.
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--MODAL DE CARGA DE EXCEL DE APERTURA-->
+<div class="modal fade"
+     id="modalSubirApertura"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Apertura de Contenedor
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden"
+                       id="contenedorSeleccionado" />
+
+                <div id="dropZone"
+                     class="drop-zone">
+
+                    <i class="bi bi-file-earmark-excel fs-1"></i>
+
+                    <h5 class="mt-3">
+                        Arrastre el archivo Excel aquí
+                    </h5>
+
+                    <p class="text-muted">
+
+                        o haga clic para seleccionarlo
+
+                    </p>
+
+                    <input type="file"
+                           id="archivoExcel"
+                           accept=".xlsx"
+                           hidden />
+
+                </div>
+
+                <div id="nombreArchivo"
+                     class="alert alert-light mt-3 d-none">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Cancelar
+
+                </button>
+
+                <button type="button"
+                        id="btnSubirExcel"
+                        class="btn btn-success">
+
+                    <i class="bi bi-upload"></i>
+
+                    Subir Archivo
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--MODAL DE VISUALIZACION DE DATOS DE APERTURA--> 
+<div class="modal fade"
+     id="modalVerApertura"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Apertura de Contenedor
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden"
+                       id="contenedorAperturaActual" />
+
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                        <label class="form-label">Fecha</label>
+                        <input id="verFecha"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Hora</label>
+                        <input id="verHora"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Contenedor</label>
+                        <input id="verContenedor"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Tamaño</label>
+                        <input id="verTamano"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">N° Viaje</label>
+                        <input id="verViaje"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Transportista</label>
+                        <input id="verTransportista"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Marchamo</label>
+                        <input id="verMarchamo"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Importador</label>
+                        <input id="verImportador"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Agencia</label>
+                        <input id="verAgencia"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">Mercadería</label>
+                        <textarea id="verMercaderia"
+                                  class="form-control"
+                                  rows="3"
+                                  readonly></textarea>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Bultos</label>
+                        <input id="verBultos"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Peso</label>
+                        <input id="verPeso"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Embalaje</label>
+                        <input id="verEmbalaje"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">BL</label>
+                        <input id="verBL"
+                               class="form-control"
+                               readonly />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="row align-items-end">
+
+                <div class="col-md-8">
+
+                    <label class="form-label fw-semibold">
+                        Ubicación Operativa
+                    </label>
+
+                    <select id="verUbicacion"
+                            class="form-select">
+
+                        <option value="PENDIENTE">
+                            Pendiente
+                        </option>
+
+                        <option value="BODEGA2000">
+                            Bodega2000
+                        </option>
+
+                        <option value="AGROQUIMICOS">
+                            Agroquímicos
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <button type="button"
+                            id="btnGuardarUbicacion"
+                            class="btn btn-primary w-100">
+
+                        <i class="bi bi-arrow-left-right"></i>
+                        Actualizar Ubicación
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        id="btnEliminarApertura"
+                        class="btn btn-danger">
+
+                    <i class="bi bi-trash"></i>
+                    Eliminar
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Cerrar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    /*VISTA INVENTARIO*/
+    .awesome-inventario .icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    .awesome-inventario table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .awesome-inventario table td {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .awesome-inventario .table-responsive {
+        max-height: 65vh;
+        overflow-y: auto;
+    }
+
+    .awesome-inventario .card {
+        border-radius: 14px;
+    }
+
+    /*MODAL UPLOAD*/
+    .drop-zone {
+        border: 3px dashed #ced4da;
+        border-radius: 12px;
+        padding: 50px;
+        text-align: center;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+        .drop-zone:hover {
+            background: #f8f9fa;
+        }
+
+        .drop-zone.dragover {
+            border-color: #198754;
+            background: #eefcf4;
+        }
+
+</style>
+
+<!--SCRIPTS PARA SUBIR APERTURAS-->
+<script>
+
+    let archivoSeleccionado = null;
+
+    document.querySelectorAll(".btn-apertura")
+        .forEach(btn =>
+    {
+        btn.addEventListener("click", function ()
+        {
+            const contenedor =
+                this.dataset.contenedor;
+
+            document.getElementById(
+                "contenedorSeleccionado")
+                .value = contenedor;
+
+            const modal =
+                new bootstrap.Modal(
+                    document.getElementById(
+                        "modalSubirApertura"));
+
+            modal.show();
+        });
+    });
+
+    const dropZone =
+        document.getElementById("dropZone");
+
+    const inputArchivo =
+        document.getElementById("archivoExcel");
+
+    dropZone.addEventListener("click", () =>
+    {
+        inputArchivo.click();
+    });
+
+    inputArchivo.addEventListener("change", () =>
+    {
+        seleccionarArchivo(
+            inputArchivo.files[0]);
+    });
+
+    dropZone.addEventListener("dragover", e =>
+    {
+        e.preventDefault();
+
+        dropZone.classList.add(
+            "dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () =>
+    {
+        dropZone.classList.remove(
+            "dragover");
+    });
+
+    dropZone.addEventListener("drop", e =>
+    {
+        e.preventDefault();
+
+        dropZone.classList.remove(
+            "dragover");
+
+        seleccionarArchivo(
+            e.dataTransfer.files[0]);
+    });
+
+    function seleccionarArchivo(file)
+    {
+        archivoSeleccionado = file;
+
+        const nombre =
+            document.getElementById(
+                "nombreArchivo");
+
+        nombre.classList.remove(
+            "d-none");
+
+        nombre.innerHTML =
+            "<strong>Archivo:</strong> "
+            + file.name;
+    }
+
+</script>
+
+<script>
+
+    document
+    .getElementById("btnSubirExcel")
+    .addEventListener("click",
+    async function ()
+    {
+        if (!archivoSeleccionado)
+        {
+            alert(
+                "Seleccione un archivo.");
+            return;
+        }
+
+        const contenedor =
+            document.getElementById(
+                "contenedorSeleccionado")
+                .value;
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "contenedor",
+            contenedor);
+
+        formData.append(
+            "archivo",
+            archivoSeleccionado);
+
+        try
+        {
+            const response =
+                await fetch(
+                    "/Aperturas/Upload",
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+
+            const texto =
+                await response.text();
+
+            if (!response.ok)
+            {
+                alert(texto);
+                return;
+            }
+
+            alert(
+                "Apertura registrada correctamente.");
+
+            location.reload();
+        }
+        catch
+        {
+            alert(
+                "Error enviando archivo.");
+        }
+    });
+
+</script>
+
+<!--SCRIPT PARA VER DETALLE DE APERTURA-->
+<script>
+        async function verApertura(contenedor) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/Aperturas/Obtener?contenedor=${encodeURIComponent(contenedor)}`);
+
+            const data =
+                await response.json();
+
+            document.getElementById("contenedorAperturaActual").value =
+                contenedor;
+
+            document.getElementById("verFecha").value =
+                data.fechaApertura?.split('T')[0] ?? '';
+
+            document.getElementById("verHora").value =
+                data.horaApertura ?? '';
+
+            document.getElementById("verContenedor").value =
+                data.contenedor ?? '';
+
+            document.getElementById("verTamano").value =
+                data.tamano ?? '';
+
+            document.getElementById("verViaje").value =
+                data.numeroViaje ?? '';
+
+            document.getElementById("verTransportista").value =
+                data.transportista ?? '';
+
+            document.getElementById("verMarchamo").value =
+                data.marchamo ?? '';
+
+            document.getElementById("verImportador").value =
+                data.importador ?? '';
+
+            document.getElementById("verAgencia").value =
+                data.agencia ?? '';
+
+            document.getElementById("verMercaderia").value =
+                data.mercaderia ?? '';
+
+            document.getElementById("verBultos").value =
+                data.bultos ?? '';
+
+            document.getElementById("verPeso").value =
+                data.peso ?? '';
+
+            document.getElementById("verEmbalaje").value =
+                data.embalaje ?? '';
+
+            document.getElementById("verBL").value =
+                data.bl ?? '';
+
+            document.getElementById("verUbicacion").value =
+                data.ubicacionActual;
+
+            new bootstrap.Modal(
+                document.getElementById("modalVerApertura"))
+                .show();
+
+        }
+        catch {
+
+            alert(
+                "No fue posible obtener la apertura.");
+
+        }
+
+        //eliminar
+            document
+    .getElementById("btnEliminarApertura")
+    .addEventListener("click", async () => {
+
+        const contenedor =
+            document.getElementById(
+                "contenedorAperturaActual").value;
+
+        if (!confirm(
+            `¿Eliminar apertura de ${contenedor}?`))
+            return;
+
+        try {
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "contenedor",
+                contenedor);
+
+            const response =
+                await fetch(
+                    "/Aperturas/Eliminar",
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+
+            if (!response.ok)
+            {
+                const error =
+                    await response.text();
+
+                throw error;
+            }
+
+            location.reload();
+
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+
+    });
+
+    //Ubicacion
+    document
+    .getElementById("btnGuardarUbicacion")
+    .addEventListener(
+        "click",
+        async function ()
+        {
+            const contenedor =
+                document.getElementById(
+                    "contenedorAperturaActual")
+                    .value;
+
+            const ubicacion =
+                document.getElementById(
+                    "verUbicacion")
+                    .value;
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "contenedor",
+                contenedor);
+
+            formData.append(
+                "ubicacion",
+                ubicacion);
+
+            const response =
+                await fetch(
+                    "/AperturasOperativas/Mover",
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+
+            const data =
+                await response.json();
+
+            if (data.ok)
+            {
+                alert(
+                    "Ubicación actualizada.");
+
+                location.reload();
+            }
+            else
+            {
+                alert(
+                    "No fue posible actualizar la ubicación.");
+            }
+        });
+    }
+</script>

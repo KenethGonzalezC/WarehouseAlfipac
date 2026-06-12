@@ -1,32 +1,52 @@
 ﻿@model AWESOME.Models.ViewModels.DespachosIndexViewModel
 
 @{
-    ViewData["Title"] = "Despachos - Control Tower";
+    ViewData["Title"] = "Despachos - SCL";
 }
 
 <div class="container-fluid awesome-despachos">
 
-    <!-- HEADER KPI -->
+    <!-- KPI + FECHA OPERATIVA -->
     <div class="row g-3 mb-4">
 
-        <!-- TOTAL DEL DÍA -->
-        <div class="col-md-4">
+        <!-- KPI -->
+        <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-sm h-100">
 
                 <div class="card-body">
 
                     <div class="d-flex justify-content-between align-items-center">
 
                         <div>
-                            <h6 class="text-muted mb-1">Despachos del día</h6>
-                            <h3 class="mb-0 fw-bold">
+
+                            <div class="text-muted small">
+                                Despachos del día
+                            </div>
+
+                            <h2 class="fw-bold mb-0">
                                 @Model.TotalHoy
-                            </h3>
+                            </h2>
+
+                            @if (Model.BuscarHistorico)
+                            {
+                                <div class="badge bg-warning text-dark mt-2">
+                                    HISTÓRICO
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="badge bg-success mt-2">
+                                    @Model.FechaSeleccionada.ToString("dd/MM/yyyy")
+                                </div>
+                            }
+
                         </div>
 
                         <div class="icon-box bg-danger-subtle text-danger">
+
                             <i class="bi bi-arrow-up-circle"></i>
+
                         </div>
 
                     </div>
@@ -37,65 +57,66 @@
 
         </div>
 
-        <!-- FECHA -->
-        <div class="col-md-8">
+        <!-- FECHA OPERATIVA -->
+        <div class="col-lg-8">
 
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-sm h-100">
 
                 <div class="card-body">
 
-                    <form method="get" class="d-flex align-items-end gap-3 flex-wrap">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                         <div>
 
-                            <label class="form-label small text-muted">
-                                Fecha de consulta
-                            </label>
+                            <div class="fw-semibold">
+                                Fecha Operativa
+                            </div>
 
-                            <input type="date"
-                                   name="fecha"
-                                   value="@Model.FechaSeleccionada.ToString("yyyy-MM-dd")"
-                                   class="form-control" />
+                            <div class="text-muted small">
+                                Seleccione el día que desea consultar
+                            </div>
 
                         </div>
 
-                        <a asp-action="Index" class="btn btn-secondary">
-                            Hoy
-                        </a>
+                        <form method="get"
+                              class="d-flex align-items-end gap-2">
 
-                        <div class="col-md-4"> 
-                            <label class="form-label">Contenedor</label> 
-                            <input type="text" 
-                                name="contenedor" 
-                                value="@Model.Contenedor" 
-                                class="form-control" 
-                                placeholder="Buscar contenedor..." /> 
+                            <div>
+
+                                <label class="form-label small text-muted mb-1">
+                                    Fecha
+                                </label>
+
+                                <input type="date"
+                                       name="fecha"
+                                       value="@Model.FechaSeleccionada.ToString("yyyy-MM-dd")"
+                                       class="form-control" />
+
                             </div>
 
-                        <div class="col-md-4"> 
-                            <label class="form-label">Referencia</label> 
-                            <input type="text" 
-                                name="contenedor" 
-                                value="@Model.ContenedorReferencia" 
-                                class="form-control" 
-                                placeholder="Buscar contenedor..." /> 
-                            </div>
+                            <button type="submit"
+                                    class="btn btn-primary">
 
-                        <div>
+                                <i class="bi bi-calendar-check"></i>
+                                Cambiar fecha
 
-                            <button class="btn btn-primary">
-                                <i class="bi bi-search"></i>
-                                Consultar
                             </button>
 
-                        </div>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                Hoy
+                            </a>
 
-                        <div class="text-muted small ms-auto">
+                        </form>
+
+                        <div class="text-muted small">
+
                             <i class="bi bi-clock"></i>
-                            Última actualización: @DateTime.Now.ToString("HH:mm")
+                            Última actualización:
+                            @DateTime.Now.ToString("HH:mm")
+
                         </div>
 
-                    </form>
+                    </div>
 
                 </div>
 
@@ -105,18 +126,164 @@
 
     </div>
 
-    <!-- TABLA CONTROL TOWER -->
+    <!-- FILTROS DE BUSQUEDA -->
+    <form method="get">
+
+        <!-- Conserva la fecha seleccionada -->
+        <input type="hidden"
+               name="fecha"
+               value="@Model.FechaSeleccionada.ToString("yyyy-MM-dd")" />
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+
+                <h6 class="mb-0">
+                    Filtros de búsqueda
+                </h6>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label small text-muted">
+                            Contenedor
+                        </label>
+
+                        <input type="text"
+                               name="contenedor"
+                               value="@Model.Contenedor"
+                               class="form-control"
+                               placeholder="CONTENEDOR" />
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label small text-muted">
+                            Marchamos
+                        </label>
+
+                        <input type="text"
+                               name="marchamos"
+                               value="@Model.Marchamos"
+                               class="form-control"
+                               placeholder="MARCHAMOS" />
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label small text-muted">
+                            Cliente
+                        </label>
+
+                        <input type="text"
+                               name="cliente"
+                               value="@Model.Cliente"
+                               class="form-control"
+                               placeholder="CLIENTE" />
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label small text-muted">
+                            Referencia
+                        </label>
+
+                        <input type="text"
+                               name="referencia"
+                               value="@Model.Referencia"
+                               class="form-control"
+                               placeholder="CONTENEDOR REFERENCIA" />
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-6">
+
+                        <label class="form-label small text-muted">
+                            Viaje / DUA
+                        </label>
+
+                        <input type="text"
+                               name="viajeDua"
+                               value="@Model.ViajeDua"
+                               class="form-control"
+                               placeholder="VIAJE O DUA" />
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                    <a asp-action="Index"
+                       asp-route-fecha="@Model.FechaSeleccionada.ToString("yyyy-MM-dd")"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Limpiar filtros
+
+                    </a>
+
+                    <div class="col-lg-5 col-md-6">
+
+                        <div class="form-check mt-2">
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="buscarHistorico"
+                                   value="true"
+                            @(Model.BuscarHistorico ? "checked" : null) />
+
+                            <label class="form-check-label">
+
+                                Buscar en otros dias
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <!-- TABLA -->
     <div class="card border-0 shadow-sm">
 
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
             <div>
-                <h6 class="mb-0 fw-semibold">
+
+                <h6 class="fw-semibold mb-0">
                     Lista de contenedores despachados
                 </h6>
+
                 <small class="text-muted">
                     Vista operativa en tiempo real desde SCL
                 </small>
+
             </div>
 
             <span class="badge bg-dark">
@@ -139,34 +306,55 @@
                             <th>Marchamos</th>
                             <th>Cliente</th>
                             <th>Referencia</th>
+                            <th>Viaje / DUA</th>
                         </tr>
 
                     </thead>
 
                     <tbody>
 
-                        @foreach (var item in Model.Despachos)
+                        @if (Model.Despachos.Any())
+                        {
+                            @foreach (var item in Model.Despachos)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @item.FechaHoraDespacho.ToString("HH:mm")
+                                    </td>
+
+                                    <td class="fw-bold">
+                                        @item.Contenedor
+                                    </td>
+
+                                    <td>
+                                        @item.Marchamos
+                                    </td>
+
+                                    <td>
+                                        @item.Informacion
+                                    </td>
+
+                                    <td>
+                                        @item.ContenedorReferencia
+                                    </td>
+
+                                    <td>
+                                        @item.ViajeDua
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
 
-                                <td>
-                                    @item.FechaHoraDespacho.ToString("HH:mm")
-                                </td>
+                                <td colspan="6"
+                                    class="text-center text-muted py-5">
 
-                                <td class="fw-bold">
-                                    @item.Contenedor
-                                </td>
+                                    No existen registros para los filtros seleccionados.
 
-                                <td>
-                                    @item.Marchamos
-                                </td>
-
-                                <td>
-                                    @item.Informacion
-                                </td>
-
-                                <td>
-                                    @item.ContenedorReferencia
                                 </td>
 
                             </tr>
@@ -185,14 +373,15 @@
 </div>
 
 <style>
+
     .awesome-despachos .icon-box {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
+        font-size: 24px;
     }
 
     .awesome-despachos table tbody tr:hover {
@@ -208,4 +397,9 @@
         max-height: 65vh;
         overflow-y: auto;
     }
+
+    .awesome-despachos .card {
+        border-radius: 14px;
+    }
+
 </style>

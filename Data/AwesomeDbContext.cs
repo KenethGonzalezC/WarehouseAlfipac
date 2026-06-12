@@ -12,6 +12,7 @@ public class AwesomeDbContext : DbContext
     }
 
     public DbSet<ConfiguracionSistema> ConfiguracionesSistema { get; set; }
+    public DbSet<AperturaContenedor> AperturasContenedores { get; set; }
 
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)

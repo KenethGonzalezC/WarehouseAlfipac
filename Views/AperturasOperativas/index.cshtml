@@ -1,0 +1,578 @@
+﻿@model AWESOME.Models.ViewModels.AperturasIndexViewModel
+
+@{
+    ViewData["Title"] = "Aperturas - AWESOME";
+}
+
+<div class="container-fluid awesome-aperturas">
+
+    <!-- HEADER -->
+
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Aperturas
+        </h2>
+
+        <p class="text-muted mb-0">
+            Gestión operativa de aperturas de contenedores
+        </p>
+
+    </div>
+
+    <!-- KPIs -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Pendientes
+                            </div>
+
+                            <h4 class="fw-bold mb-0">
+                                @Model.Pendientes.Count
+                            </h4>
+
+                        </div>
+
+                        <div class="icon-box bg-warning-subtle text-warning">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Bodega2000
+                            </div>
+
+                            <h4 class="fw-bold mb-0">
+                                @Model.Bodega2000.Count
+                            </h4>
+
+                        </div>
+
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="bi bi-building"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Agroquímicos
+                            </div>
+
+                            <h4 class="fw-bold mb-0">
+                                @Model.Agroquimicos.Count
+                            </h4>
+
+                        </div>
+
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="bi bi-flower1"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PENDIENTES -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white py-2">
+
+            <span class="fw-semibold">
+                Pendientes de ubicación
+            </span>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Contenedor</th>
+                            <th>Importador</th>
+                            <th style="width:250px">
+                                Ubicación
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (!Model.Pendientes.Any())
+                        {
+                            <tr>
+
+                                <td colspan="3"
+                                    class="text-center text-muted py-4">
+
+                                    No existen aperturas pendientes.
+
+                                </td>
+
+                            </tr>
+                        }
+
+                        @foreach (var item in Model.Pendientes)
+                        {
+                            <tr>
+
+                                <td class="fw-bold">
+                                    @item.Contenedor
+                                </td>
+
+                                <td class="text-muted">
+                                    @item.Importador
+                                </td>
+
+                                <td>
+
+                                    <div class="d-flex gap-2">
+
+                                        <select class="form-select form-select-sm ubicacion-select">
+
+                                            <option value="">
+                                                Seleccionar...
+                                            </option>
+
+                                            <option value="BODEGA2000">
+                                                Bodega2000
+                                            </option>
+
+                                            <option value="AGROQUIMICOS">
+                                                Agroquímicos
+                                            </option>
+
+                                        </select>
+
+                                        <button type="button"
+                                                class="btn btn-sm btn-primary"
+                                                onclick="moverContenedor(this,'@item.Contenedor')">
+
+                                            <i class="bi bi-arrow-right"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- UBICACIONES -->
+
+    <div class="row g-3">
+
+        <!-- BODEGA 2000 -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-header bg-white py-2">
+
+                    <span class="fw-semibold">
+                        Bodega2000
+                    </span>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+                                    <th>Contenedor</th>
+                                    <th>Importador</th>
+                                    <th class="text-center">
+                                        Expediente
+                                    </th>
+                                    <th class="text-center">
+                                        Acción
+                                    </th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @if (!Model.Bodega2000.Any())
+                                {
+                                    <tr>
+
+                                        <td colspan="3"
+                                            class="text-center text-muted py-4">
+
+                                            Sin contenedores.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                                @foreach (var item in Model.Bodega2000)
+                                {
+                                    <tr>
+
+                                        <td class="fw-bold">
+                                            @item.Contenedor
+                                        </td>
+
+                                        <td class="text-muted">
+                                            @item.Importador
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <a asp-controller="AperturasOperativas"
+                                               asp-action="Detalle"
+                                               asp-route-contenedor="@item.Contenedor"
+                                               class="btn btn-outline-primary btn-sm">
+
+                                                <i class="bi bi-folder2-open"></i>
+
+                                            </a>
+
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-warning"
+                                                    onclick="devolverPendiente('@item.Contenedor')">
+
+                                                <i class="bi bi-arrow-counterclockwise"></i>
+
+                                            </button>
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AGROQUIMICOS -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-header bg-white py-2">
+
+                    <span class="fw-semibold">
+                        Agroquímicos
+                    </span>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+                                    <th>Contenedor</th>
+                                    <th>Importador</th>
+                                    <th class="text-center">
+                                        Expediente
+                                    </th>
+                                    <th class="text-center">
+                                        Acción
+                                    </th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @if (!Model.Agroquimicos.Any())
+                                {
+                                    <tr>
+
+                                        <td colspan="3"
+                                            class="text-center text-muted py-4">
+
+                                            Sin contenedores.
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                                @foreach (var item in Model.Agroquimicos)
+                                {
+                                    <tr>
+
+                                        <td class="fw-bold">
+                                            @item.Contenedor
+                                        </td>
+
+                                        <td class="text-muted">
+                                            @item.Importador
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <a asp-controller="AperturasOperativas"
+                                               asp-action="Detalle"
+                                               asp-route-contenedor="@item.Contenedor"
+                                               class="btn btn-outline-primary btn-sm">
+
+                                                <i class="bi bi-folder2-open"></i>
+
+                                            </a>
+
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-warning"
+                                                    onclick="devolverPendiente('@item.Contenedor')">
+
+                                                <i class="bi bi-arrow-counterclockwise"></i>
+
+                                            </button>
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .awesome-aperturas .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .awesome-aperturas .icon-box {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .awesome-aperturas table th,
+    .awesome-aperturas table td {
+        vertical-align: middle;
+    }
+
+    .awesome-aperturas table td {
+        font-size: .92rem;
+    }
+
+    .awesome-aperturas .table-responsive {
+        max-height: 500px;
+    }
+
+    .awesome-aperturas .card-header {
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    .awesome-aperturas .table th {
+        font-size: .85rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .awesome-aperturas .fw-bold {
+        letter-spacing: .3px;
+    }
+
+</style>
+
+<script>
+
+    async function moverContenedor(btn, contenedor)
+    {
+        const fila =
+            btn.closest("tr");
+
+        const ubicacion =
+            fila.querySelector(".ubicacion-select").value;
+
+        if (!ubicacion)
+        {
+            alert("Seleccione una ubicación.");
+            return;
+        }
+
+        try
+        {
+            const formData =
+                new FormData();
+
+            formData.append(
+                "contenedor",
+                contenedor);
+
+            formData.append(
+                "ubicacion",
+                ubicacion);
+
+            const response =
+                await fetch(
+                    "/AperturasOperativas/Mover",
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+
+            const data =
+                await response.json();
+
+            if (!data.ok)
+            {
+                throw "No fue posible mover el contenedor.";
+            }
+
+            location.reload();
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+    }
+
+</script>
+
+<!-- SCRIPT DEVOLVER A PENDIENTES -->
+<script>
+        async function devolverPendiente(contenedor)
+    {
+        const formData = new FormData();
+
+        formData.append(
+            "contenedor",
+            contenedor);
+
+        formData.append(
+            "ubicacion",
+            "PENDIENTE");
+
+        const response =
+            await fetch(
+                "/AperturasOperativas/Mover",
+                {
+                    method: "POST",
+                    body: formData
+                });
+
+        const data =
+            await response.json();
+
+        if (data.ok)
+        {
+            location.reload();
+        }
+    }
+</script>

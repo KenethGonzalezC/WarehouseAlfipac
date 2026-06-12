@@ -1,4 +1,5 @@
 ﻿using AWESOME.Data;
+using AWESOME.Models.Entidades;
 using AWESOME.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,45 +12,99 @@ public class BitacoraDespachosController : Controller
 {
     private readonly SclDbContext _context;
 
-    public BitacoraDespachosController(SclDbContext context)
+    public BitacoraDespachosController(
+        SclDbContext context)
     {
         _context = context;
     }
 
-    public async Task<IActionResult> Index(DateTime? fecha, string? contenedor, string? contenedorReferencia)
+    public async Task<IActionResult> Index(
+    DateTime? fecha,
+    string? contenedor,
+    string? marchamos,
+    string? cliente,
+    string? referencia,
+    string? viajeDua,
+    bool buscarHistorico = false)
     {
-        var fechaFiltro = fecha?.Date ?? DateTime.Today;
+        var fechaFiltro =
+            fecha?.Date ?? DateTime.Today;
 
-        var query = _context.BitacoraDespachos
-            .AsNoTracking()
-            .Where(x => x.FechaHoraDespacho.Date == fechaFiltro);
+        IQueryable<BitacoraDespacho> query =
+            _context.BitacoraDespachos
+                .AsNoTracking();
 
-        if (!string.IsNullOrWhiteSpace(contenedor))
+        // SOLO FILTRAR FECHA SI NO ES HISTÓRICO
+        if (!buscarHistorico)
         {
-            var c = contenedor.Trim().ToUpper();
-            query = query.Where(x => x.Contenedor.Contains(c));
+            query = query.Where(x =>
+                x.FechaHoraDespacho.Date == fechaFiltro);
         }
 
-        if (!string.IsNullOrWhiteSpace(contenedorReferencia))
+        // CONTENEDOR
+        if (!string.IsNullOrWhiteSpace(contenedor))
         {
-            var c = contenedorReferencia.Trim().ToUpper();
+            contenedor = contenedor.Trim().ToUpper();
+
+            query = query.Where(x =>
+                x.Contenedor.Contains(contenedor));
+        }
+
+        // MARCHAMOS
+        if (!string.IsNullOrWhiteSpace(marchamos))
+        {
+            marchamos = marchamos.Trim().ToUpper();
+
+            query = query.Where(x =>
+                x.Marchamos.Contains(marchamos));
+        }
+
+        // CLIENTE
+        if (!string.IsNullOrWhiteSpace(cliente))
+        {
+            cliente = cliente.Trim().ToUpper();
+
+            query = query.Where(x =>
+                x.Informacion.Contains(cliente));
+        }
+
+        // REFERENCIA
+        if (!string.IsNullOrWhiteSpace(referencia))
+        {
+            referencia = referencia.Trim().ToUpper();
 
             query = query.Where(x =>
                 x.ContenedorReferencia != null &&
-                x.ContenedorReferencia.Contains(c));
+                x.ContenedorReferencia.Contains(referencia));
         }
 
-        var data = await query
+        // VIAJE / DUA
+        if (!string.IsNullOrWhiteSpace(viajeDua))
+        {
+            viajeDua = viajeDua.Trim().ToUpper();
+
+            query = query.Where(x =>
+                x.ViajeDua.Contains(viajeDua));
+        }
+
+        var despachos = await query
             .OrderByDescending(x => x.FechaHoraDespacho)
             .ToListAsync();
 
         var vm = new DespachosIndexViewModel
         {
-            Despachos = data,
-            TotalHoy = data.Count,
+            Despachos = despachos,
+            TotalHoy = despachos.Count,
+
             FechaSeleccionada = fechaFiltro,
+
             Contenedor = contenedor,
-            ContenedorReferencia = contenedorReferencia
+            Marchamos = marchamos,
+            Cliente = cliente,
+            Referencia = referencia,
+            ViajeDua = viajeDua,
+
+            BuscarHistorico = buscarHistorico
         };
 
         return View(vm);

@@ -1,0 +1,375 @@
+﻿@model AWESOME.Models.ViewModels.BitacoraIndexViewModel
+
+@{
+    ViewData["Title"] = "Bitácora Operativa - SCL";
+}
+
+<div class="container-fluid awesome-bitacora">
+
+    <!-- KPI + FECHA OPERATIVA -->
+    <div class="row g-3 mb-4">
+
+        <!-- TOTAL MOVIMIENTOS -->
+        <div class="col-lg-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Movimientos del día
+                            </div>
+
+                            <h2 class="fw-bold mb-0">
+                                @Model.TotalMovimientos
+                            </h2>
+
+                            <div class="badge bg-primary mt-2">
+                                @Model.FechaSeleccionada.ToString("dd/MM/yyyy")
+                            </div>
+
+                        </div>
+
+                        <div class="icon-box bg-primary-subtle text-primary">
+
+                            <i class="bi bi-clipboard-data"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- INGRESOS -->
+        <div class="col-lg-2">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Ingresos
+                            </div>
+
+                            <h2 class="fw-bold mb-0 text-success">
+                                @Model.TotalIngresos
+                            </h2>
+
+                        </div>
+
+                        <div class="icon-box bg-success-subtle text-success">
+
+                            <i class="bi bi-arrow-down-circle"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DESPACHOS -->
+        <div class="col-lg-2">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Despachos
+                            </div>
+
+                            <h2 class="fw-bold mb-0 text-danger">
+                                @Model.TotalDespachos
+                            </h2>
+
+                        </div>
+
+                        <div class="icon-box bg-danger-subtle text-danger">
+
+                            <i class="bi bi-arrow-up-circle"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FECHA OPERATIVA -->
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                        <div>
+
+                            <div class="fw-semibold">
+                                Fecha Operativa
+                            </div>
+
+                            <div class="text-muted small">
+                                Seleccione el día que desea consultar
+                            </div>
+
+                        </div>
+
+                        <form method="get"
+                              class="d-flex align-items-end gap-2">
+
+                            <div>
+
+                                <label class="form-label small text-muted mb-1">
+                                    Fecha
+                                </label>
+
+                                <input type="date"
+                                       name="fecha"
+                                       value="@Model.FechaSeleccionada.ToString("yyyy-MM-dd")"
+                                       class="form-control" />
+
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                <i class="bi bi-calendar-check"></i>
+
+                            </button>
+
+                            <a asp-action="Index"
+                               class="btn btn-secondary">
+
+                                Hoy
+
+                            </a>
+
+                        </form>
+
+                    </div>
+
+                    <div class="mt-2 text-muted small">
+
+                        <i class="bi bi-clock"></i>
+                        Última actualización:
+                        @DateTime.Now.ToString("HH:mm")
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h6 class="fw-semibold mb-0">
+                    Bitácora Operativa Consolidada
+                </h6>
+
+                <small class="text-muted">
+                    Vista cronológica de ingresos y despachos
+                </small>
+
+            </div>
+
+            <span class="badge bg-dark">
+                @Model.Movimientos.Count registros
+            </span>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr class="text-center">
+
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Contenedor</th>
+                            <th>Marchamos</th>
+                            <th>Transportista</th>
+                            <th>Información</th>
+                            <th>Chofer</th>
+                            <th>Placa</th>
+                            <th>Chasis</th>
+                            <th>Viaje / DUA</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model.Movimientos.Any())
+                        {
+                            @foreach (var item in Model.Movimientos)
+                            {
+                                <tr class="text-center">
+
+                                    <td class="fw-bold text-success">
+
+                                        @(item.HoraEntrada?.ToString("HH:mm") ?? "")
+
+                                    </td>
+
+                                    <td class="fw-bold text-danger">
+
+                                        @(item.HoraSalida?.ToString("HH:mm") ?? "")
+
+                                    </td>
+
+                                    <td class="fw-bold">
+
+                                        @item.Contenedor
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Marchamos
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Transportista
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Informacion
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Chofer
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Placa
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.Chasis
+
+                                    </td>
+
+                                    <td>
+
+                                        @item.ViajeODua
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+
+                                <td colspan="10"
+                                    class="text-center text-muted py-5">
+
+                                    <div class="d-flex flex-column align-items-center">
+
+                                        <i class="bi bi-inbox fs-1 mb-2"></i>
+
+                                        <span>
+                                            No existen movimientos para la fecha seleccionada.
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .awesome-bitacora .icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    .awesome-bitacora .table-responsive {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .awesome-bitacora table td {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .awesome-bitacora table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .awesome-bitacora .card {
+        border-radius: 14px;
+    }
+
+</style>

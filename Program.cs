@@ -52,8 +52,12 @@ builder.Services.AddDbContext<SclDbContext>(options =>
 // SERVICES
 // ==========================
 
+//login SCL
 builder.Services.AddScoped<IAuthService, AuthService>();
+//ingresos SCL
 builder.Services.AddScoped<IngresosService>();
+//aperturas AWESOME
+builder.Services.AddScoped<AperturasService>();
 
 // ==========================
 // AUTHENTICATION
